@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 
 
 import Dashboard from "../Pages/Dashboard";
-import Header from './header';
+import Header from './header/header';
 import Sidebar from './sidebar';
 
 
