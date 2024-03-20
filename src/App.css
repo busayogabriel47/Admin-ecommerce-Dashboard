@@ -3,7 +3,26 @@
 @tailwind components;
 @tailwind utilities;
 
-.css-11b3ww9-MuiPaper-root-MuiAppBar-root{
+.css-19z1ozs-MuiPaper-root-MuiAppBar-root{
   background-color: #FEFEFE !important;
   width: 100% !important;
+  color: #000 !important;
+}
+.MuiToolbar-root .MuiToolbar-gutters 
+.MuiToolbar-regular .css-hyum1k-MuiToolbar-root{
+  background-color: #FEFEFE !important;
+}
+
+.css-12i7wg6-MuiPaper-root-MuiDrawer-paper{
+  background: #0000 !important;
+}
+
+
+
+@media (min-width: 600px){
+.css-hyum1k-MuiToolbar-root {
+    min-height: 64px;
+    background-color: #FEFEFE !important;
+    
+}
 }

@@ -1,6 +1,4 @@
-import { AppBar, IconButton, Toolbar, Typography } from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
+
 {/* Import Heroicons/react*/}
 
 import bell from "../../assets/Notification.png"
@@ -12,24 +10,9 @@ import user from "../../assets/Image.png"
 
 
 
-const Header = ({open, handleDrawerOpen}) => {
+const Header = () => {
 
   return (
-    <div className='bg-[#FEFEFE]'>
-        <AppBar position="fixed" open={open}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: 'none' }),
-            }}
-          >
-          <MenuIcon />
-          </IconButton>
           <div className='flex flex-row justify-between w-[100%] items-center'>
                 <div className='text-[#000] flex w-[80%] items-center gap-4' >
                   <span>
@@ -59,9 +42,6 @@ const Header = ({open, handleDrawerOpen}) => {
                     </div>
                 </div>
           </div>
-        </Toolbar>
-      </AppBar>
-    </div>
   )
 }
 
