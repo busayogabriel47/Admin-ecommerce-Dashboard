@@ -1,8 +1,14 @@
-import React from 'react'
+import Search from "./Search"
+import ProductContent from "./productContent"
+import Productcount from "./productcount"
 
 const Products = () => {
   return (
-    <div>Products</div>
+    <div>
+        <Search/>
+        <Productcount/>
+        <ProductContent/>
+    </div>
   )
 }
 

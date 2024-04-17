@@ -11,7 +11,7 @@ import Topselling from "./Topselling/Topselling"
 const Dashboard = () => {
   return (
     <div>
-        <div className='grid grid-cols-4 gap-5'>
+        <div className='grid grid-cols-1 md:grid-cols-4 gap-5'>
           {/* Chart one*/}
               <div className='flex gap-5 border-2 border-[#F1F1F1] pl-10 py-9 p- rounded-2xl'>
                   <div>
@@ -86,7 +86,7 @@ const Dashboard = () => {
         </div>
 
       {/* */}
-        <div className="grid grid-cols-2 gap-4 my-5">
+        <div className="grid md:grid-cols-2 gap-4 my-5">
               <SalesAnalytics/>
               <Salesbycategory/>
         </div>

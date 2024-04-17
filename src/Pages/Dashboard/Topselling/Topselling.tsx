@@ -20,9 +20,9 @@ const Topselling = () => {
                           <h3>Sort by</h3>
                       </div>
                       {/*Sales by category graph*/}
-                      <div className="flex flex-row w-full mt-5">
-                            <div className="pt-5 w-full">
-                                <table className="table-auto border border-slate-400 w-[100%]">
+                      <div className="flex flex-col md:flex-row w-full mt-5">
+                            <div className="pt-5 w-full overflow-x-auto">
+                                <table className="table-auto border border-slate-400 w-[800px] md:w-[100%]">
                                       <thead>
                                         <tr className='text-left'>
                                           <th className='py-3 px-4'>Product name</th>
@@ -40,18 +40,18 @@ const Topselling = () => {
                                                   <img src={product} width="100%"/>                                              
                                               </div>
                                               <div>
-                                                  <h5 className='text-[1rem] font-bold'>Leather Tote Bag</h5>
-                                                  <p className='text-[0.7rem]'>Product ID: 134890</p>
+                                                  <h5 className='text-[0.9rem] md:text-[1rem] font-bold'>Leather Tote Bag</h5>
+                                                  <p className='text-[0.7rem] md:text-[0.7rem]'>Product ID: 134890</p>
                                               </div>
                                           </td>
-                                          <td>$225.00</td>
+                                          <td className='text-[0.7rem]'>$225.00</td>
                                           <td>
                                             <div className='border-solid 
                                             border-[1px] border-[green]
                                              rounded-xl w-[40%] text-center text-[green]
-                                             p-1 text-[0.9rem]'>In Stock</div>
+                                             p-1 text-[0.7rem] md:text-[0.9rem]'>In Stock</div>
                                           </td>
-                                          <td>
+                                          <td className='text-[0.7rem] md:text-[1rem]'>
                                               206 pcs
                                           </td>
                                           <td>
@@ -65,7 +65,7 @@ const Topselling = () => {
                                                         <img src={product4} width="100%"/>                                              
                                                     </div>
                                                     <div>
-                                                        <h5 className='text-[1.2rem] font-bold'>Gioaia Super Push-up Bra</h5>
+                                                        <h5 className='text-[0.9rem] md:text-[1.2rem] font-bold'>Gioaia Super Push-up Bra</h5>
                                                         <p className='text-[0.7rem]'>Product ID: 134890</p>
                                                     </div>
                                                 </td>
@@ -90,7 +90,7 @@ const Topselling = () => {
                                                   <img src={product3} width="100%"/>                                              
                                               </div>
                                               <div>
-                                                  <h5 className='text-[1.2rem] font-bold'>Hammered Drop Earnings</h5>
+                                                  <h5 className='text-[0.9rem] md:text-[1.2rem] font-bold'>Hammered Drop Earnings</h5>
                                                   <p className='text-[0.7rem]'>Product ID: 134890</p>
                                               </div>
                                           </td>
@@ -116,7 +116,7 @@ const Topselling = () => {
                                                     <img src={product1} width="100%"/>                                              
                                                 </div>
                                                 <div>
-                                                    <h5 className='text-[1.2rem] font-bold'>Woman's Crossbody Bag</h5>
+                                                    <h5 className='text-[0.9rem] md:text-[1.2rem] font-bold'>Woman's Crossbody Bag</h5>
                                                     <p className='text-[0.7rem]'>Product ID: 134890</p>
                                                 </div>
                                             </td>
