@@ -27,6 +27,7 @@ import Products from '../Pages/Products/Products'
 import dash from "../assets/dashboard.png"
 import { Link, Route, Routes } from 'react-router-dom';
 import Dashboard from '../Pages/Dashboard/Dashboard';
+import SingleProduct from '../Pages/Products/SingleProduct';
 
 const drawerWidth = 240;
 
@@ -153,7 +154,7 @@ export default function Main() {
         {[
             { text: 'Dashboard', icon: <img src={dash} alt="dashboard" />, path: '/' },
             { text: 'Products', icon: <img src={product} alt="products" />, path: '/products' },
-            { text: 'Orders', icon: <img src={orders} alt="orders" />, path: '/orders' },
+            { text: 'Orders', icon: <img src={orders} alt="orders" />, path: '/singlePro' },
             { text: 'Sales', icon: <img src={sales} alt="sales" />, path: '/sales' },
             { text: 'Reviews', icon:<img src={reviews} alt="reviews" />, path: '/reviews' },
           ].map((item, index) => (
@@ -190,6 +191,7 @@ export default function Main() {
         <Routes>
                   <Route path="/" element={<Dashboard/>}/>
                   <Route path="/products" element={<Products/>}/>
+                  <Route path="/singlePro" element={<SingleProduct/>}/>
         </Routes>
       </Box>
     </Box>
