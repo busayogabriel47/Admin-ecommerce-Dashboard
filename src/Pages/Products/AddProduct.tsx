@@ -1,0 +1,405 @@
+import React, { useEffect, useState } from "react";
+import { useProductContext } from "../../Context/CreateProductContext";
+import { Product } from "../../Types/ProductTypes";
+import API from "../../api/axios";
+import Select from 'react-select';
+import { toast } from "react-toastify";
+
+
+
+const AddProduct: React.FC = () => {
+    const { createProduct } = useProductContext();
+    const [formData, setFormData] = useState<Product>({
+        title: "",
+        description: "",
+        img: [],
+        slug: "",
+        categories: [],
+        size: [],
+        color: [],
+        tags: [],
+        price: 0,
+        quantity: 0,
+        currency: "USD",
+        inStock: true,
+        brand: "",
+    });
+    const [selectedImages, setSelectedImages] = useState<File[]>([]);
+    const [brands, setBrands] = useState([]);
+      const [categories, setCategories] = useState([]);
+      const [colors, setColors] = useState([]);
+    const [isLoading, setIsLoading] = useState(false)
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
+    const handleArrayChange = (name: keyof Product, selectedOptions: any[]) => {
+        const values = selectedOptions.map(option => option.value);
+        setFormData((prev) => ({
+          ...prev,
+          [name]: values,
+        }));
+      };
+      
+
+      const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files;
+        if (files) {
+            setSelectedImages((prevImages) => [...prevImages, ...Array.from(files)]);
+        }
+    };
+
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            setIsLoading(true); // Start loading
+      
+            // Fetch data from the backend
+            const [brandRes, categoryRes, colorRes] = await Promise.all([
+              API.get("/brands"),
+              API.get("/categories"),
+              API.get("/color"),
+            ]);
+
+            
+      
+            // Set the data after fetching
+            setBrands(brandRes.data || []);
+            setCategories(categoryRes.data || []);
+            setColors(colorRes.data.colors || []);
+          } catch (error) {
+            console.error("Error fetching data:", error);
+          } finally {
+            setIsLoading(false); // Stop loading after fetching data
+          }
+        };
+      
+        fetchData();
+      }, []);
+
+
+      const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsLoading(true);
+    
+        const formDataToSend = new FormData();
+        
+        // Append other product details to formDataToSend
+        formDataToSend.append("title", formData.title);
+        formDataToSend.append("description", formData.description);
+        formDataToSend.append("slug", formData.slug);
+        formDataToSend.append("price", formData.price.toString());
+        formDataToSend.append("quantity", formData.quantity.toString());
+        formDataToSend.append("currency", formData.currency);
+        formDataToSend.append("inStock", formData.inStock.toString());
+        
+        // Append categories and colors as well
+        formData.categories.forEach(category => {
+            formDataToSend.append("categories[]", category);
+        });
+        
+        formData.color.forEach(color => {
+            formDataToSend.append("color[]", color);
+        });
+    
+        // Append selected images using 'images' as key
+        selectedImages.forEach(image => {
+            formDataToSend.append("images", image); 
+        });
+
+        formData.size.forEach(size => {
+            formDataToSend.append("size[]", size);
+        });
+        
+
+        // Append brand ID
+    if (formData.brand) {
+        formDataToSend.append("brand", formData.brand); // Ensure brand ID is included
+    }
+        
+            console.log("Form Data Before Submission:", {
+                ...Object.fromEntries(formDataToSend), // Log all data being sent
+                brandId: formData.brand // Log the brand ID separately for clarity
+            })
+    
+        try {
+            await API.post("/products", formDataToSend, { 
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+    
+            toast.success("Product created successfully!");
+            
+            // Resetting the state after successful submission
+            setFormData({
+                title: "",
+                description: "",
+                img: [],
+                slug: "",
+                categories: [],
+                size: [],
+                color: [],
+                tags: [],
+                price: 0,
+                quantity: 0,
+                currency: "USD",
+                inStock: true,
+                brand: "",
+            });
+            
+            setSelectedImages([]);
+            
+        } catch (error) {
+            toast.error(`Error creating product: ${error.message}`);
+            
+        } finally {
+            setIsLoading(false);
+        }
+    };
+    
+
+
+    return (
+        <div className="bg-[#EEEEEE] inset-0 flex items-center justify-center w-full p-[4rem]">
+            <div className="p-6 rounded shadow-lg w-[80%]">
+                <h2 className="text-xl font-bold mb-4">Add Product</h2>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    {/* Title */}
+                    <div className="grid grid-cols-1 gap-4">
+                        <div>
+                            <label className="block text-gray-700">Title</label>
+                            <input
+                                type="text"
+                                name="title"
+                                value={formData.title}
+                                onChange={handleInputChange}
+                                className="w-full p-2 border rounded"
+                                required
+                            />
+                        </div>
+                        {/* Description */}
+                        <div>
+                            <label className="block text-gray-700">Description</label>
+                            <textarea
+                                name="description"
+                                value={formData.description}
+                                onChange={handleInputChange}
+                                className="w-full p-2 border rounded"
+                                rows={4}
+                                required
+                            ></textarea>
+                        </div>
+                        {/* Slug */}
+                        <div>
+                            <label className="block text-gray-700">Slug</label>
+                            <input
+                                type="text"
+                                name="slug"
+                                value={formData.slug}
+                                onChange={handleInputChange}
+                                className="w-full p-2 border rounded"
+                                required
+                            />
+                        </div>
+
+                        
+                        {/* Images */}
+                        <div>
+                            <label className="block text-gray-700">Images</label>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                multiple
+                                onChange={handleImageChange}
+                                className="w-full p-2 border rounded"
+                            />
+                            <div className="flex gap-2 mt-2">
+                                {selectedImages.map((image, index) => (
+                                    <img
+                                        key={index}
+                                        src={URL.createObjectURL(image)}
+                                        alt={`Selected ${index}`}
+                                        className="w-16 h-16 object-cover rounded"
+                                    />
+                                ))}
+                            </div>
+                        </div>
+
+                            {/* Categories */}
+                        {Array.isArray(categories) && categories.length > 0 && (
+                        <div>
+                            <label className="block text-gray-700">Categories</label>
+                            <Select
+                            name="categories"
+                            options={categories.map((cat) => ({
+                                value: cat.slug,
+                                label: cat.name,
+                            }))}
+                            isMulti
+                            onChange={(selectedOptions) => handleArrayChange("categories", selectedOptions)} // Updated
+                            value={categories
+                                .filter((cat) => formData.categories.includes(cat.slug))
+                                .map((cat) => ({
+                                value: cat.slug,
+                                label: cat.name,
+                                }))}
+                            required
+                            />
+                        </div>
+                        )}
+
+                       
+                        {/* Size */}
+                        <div>
+                            <label htmlFor="size">Size</label>
+                            <div className="flex gap-[1rem]">
+                                {['S', 'M', 'L', 'XL', 'XXL'].map((s) => (
+                                    <div key={s}>
+                                        <input
+                                            type="checkbox"
+                                            id={s}
+                                            name="size"
+                                            value={s}
+                                            checked={formData.size.includes(s)}
+                                            onChange={(e) => {
+                                                const selectedSize = e.target.value;
+                                                setFormData((prev) => ({
+                                                    ...prev,
+                                                    size: prev.size.includes(selectedSize)
+                                                        ? prev.size.filter((size) => size !== selectedSize)
+                                                        : [...prev.size, selectedSize],
+                                                }));
+                                            }}
+                                        />
+                                        <label htmlFor={s}>{s}</label>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Color Select */}
+                            {Array.isArray(colors) && colors.length > 0 && (
+                            <div>
+                                <label className="block text-gray-700">Color</label>
+                                <Select
+                                name="color"
+                                options={colors.map((color) => ({
+                                    value: color._id,
+                                    label: color.title,
+                                }))}
+                                isMulti
+                                onChange={(selectedOptions) => handleArrayChange("color", selectedOptions)} // Updated
+                                value={colors
+                                    .filter((color) => formData.color.includes(color._id))
+                                    .map((color) => ({
+                                    value: color._id,
+                                    label: color.title,
+                                    }))}
+                                required
+                                />
+                            </div>
+                            )}
+
+                        {/* Price */}
+                        <div>
+                            <label className="block text-gray-700">Price</label>
+                            <input
+                                type="number"
+                                name="price"
+                                value={formData.price}
+                                onChange={handleInputChange}
+                                className="w-full p-2 border rounded"
+                                required
+                            />
+                        </div>
+
+                        {/* Quantity */}
+                        <div>
+                            <label className="block text-gray-700">Quantity</label>
+                            <input
+                                type="number"
+                                name="quantity"
+                                value={formData.quantity}
+                                onChange={handleInputChange}
+                                className="w-full p-2 border rounded"
+                                required
+                            />
+                        </div>
+
+                        {/* Currency */}
+                        <div>
+                            <label className="block text-gray-700">Currency</label>
+                            <select
+                                name="currency"
+                                value={formData.currency}
+                                onChange={handleInputChange}
+                                className="w-full p-2 border rounded"
+                                required
+                            >
+                                <option value="USD">USD</option>
+                                <option value="NGN">NGN</option>
+                            </select>
+                        </div>
+
+                        {/* Instock */}
+                        <div>
+                            <label className="block text-gray-700">In Stock</label>
+                            <select
+                                name="inStock"
+                                value={formData.inStock ? "true" : "false"}
+                                onChange={(e) =>
+                                    setFormData({ ...formData, inStock: e.target.value === "true" })
+                                }
+                                className="w-full p-2 border rounded"
+                                required
+                            >
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+
+                            {/* Brand Select */}
+                        {Array.isArray(brands) && brands.length > 0 && (
+                        <div>
+                            <label className="block text-gray-700">Brand</label>
+                            <Select
+                            name="brand"
+                            options={brands.map((brand) => ({
+                                value: brand._id,
+                                label: brand.name,
+                            }))}
+                            onChange={(selectedOption) => {
+                                setFormData({
+                                ...formData,
+                                brand: selectedOption ? selectedOption.value : "", // Handle single selection
+                                });
+                            }}
+                            value={formData.brand ? { value: formData.brand, label: brands.find((brand) => brand._id === formData.brand)?.name } : null}
+                            required
+                            />
+                        </div>
+                        )}
+                    </div>
+                    <div className="mt-4 flex justify-center gap-4">
+                        <button
+                            type="submit"
+                            className={`px-[10rem] py-2 ${
+                                isLoading ? "bg-blue-300" : "bg-blue-600"
+                            } text-white rounded hover:bg-blue-${isLoading ? "400" : "700"}`}
+                            disabled={isLoading}
+                        >
+                            {isLoading ? "Adding Product..." : "Add Product"}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    );
+};
+
+export default AddProduct;
