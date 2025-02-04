@@ -20,18 +20,16 @@ import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
 import { Link, Route, Routes } from 'react-router-dom';
 import Header from './header/header';
-import product from '../assets/product.png';
 import orders from '../assets/order.png';
-import sales from '../assets/sales.png';
-import reviews from '../assets/review.png';
 import dash from '../assets/dashboard.png'
 import Products from '../Pages/Products/Products';
 import Dashboard from '../Pages/Dashboard/Dashboard';
 import SingleProduct from '../Pages/Products/SingleProduct';
-import Signin from '../Pages/Auth/Signin';
+
 import BrandList from '../Pages/Brands/BrandList';
 import AddBrand from '../Pages/Brands/AddBrand';
 import AddProduct from '../Pages/Products/AddProduct';
+import AddCategory from '../Pages/Categories/AddCategories';
 
 const drawerWidth = 240;
 
@@ -196,7 +194,7 @@ export default function Main() {
                 { text: 'Product List', path: '/products' },
                 { text: 'Brand', path: '/add-brand' },
                 { text: 'Brand List', path: '/brand-list' },
-                { text: 'Category', path: '/category' },
+                { text: 'Category', path: '/add-category' },
                 { text: 'Category List', path: '/category-list' },
                 { text: 'Color', path: '/color' },
                 { text: 'Color List', path: '/color-list' },
@@ -263,6 +261,7 @@ export default function Main() {
           <Route path="/singlePro" element={<SingleProduct />} />
           <Route  path='/add-brand' element={<AddBrand/>}/>
           <Route  path='/brand-list' element={<BrandList/>}/>
+          <Route  path='/add-category' element={<AddCategory/>}/>
         </Routes>
       </Box>
     </Box>

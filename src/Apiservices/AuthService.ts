@@ -2,6 +2,10 @@ import API from '../api/axios'
 import { SignupFormData, AuthResponse, LoginFormData } from '../Types/Types'
 
 
+export const refreshToken = async() => {
+    return  await API.post('/refresh-token', {}, { withCredentials: true });
+};
+
 export const signup = async (formData: SignupFormData): Promise<AuthResponse> => {
     try {
         const response = await API.post<AuthResponse>('/auth/signup',formData);

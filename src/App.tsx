@@ -21,6 +21,8 @@ import { UpdateBrandProvider } from './Context/EditBrandContext';
 import AddBrand from './Pages/Brands/AddBrand';
 import AddProduct from './Pages/Products/AddProduct';
 import { BrandProvider } from './Context/CreateBrand';
+import AddCategory from './Pages/Categories/AddCategories';
+import { CategoryProvider } from './Context/createCategories';
 
 
 
@@ -28,6 +30,7 @@ function App() {
 
   return (
     <>
+    <CategoryProvider>
     <BrandProvider>
     <UpdateBrandProvider>
     <DeleteBrandProvider>
@@ -52,6 +55,7 @@ function App() {
                 <Route path="add-product" element={<AddProduct />} />
                 <Route path="add-brand" element={<AddBrand />} />
                 <Route path="brand-list" element={<BrandList />} />
+                <Route path="add-category" element={<AddCategory />} />
                 <Route path="singlePro" element={<SingleProduct />} />
               </Route>
           </Route>
@@ -66,6 +70,7 @@ function App() {
     </DeleteBrandProvider>
     </UpdateBrandProvider>
     </BrandProvider>
+    </CategoryProvider>
     </>
   )
 }
