@@ -1,73 +1,59 @@
 import React, { useState } from 'react';
 import ellipsis from "../../assets/ellipsis.png";
 import ProductListLoader from '../../Components/Loaders/ProductListLoader';
-import { useBrands } from "../../Context/GetBrandsContext";
-import { useUpdateBrand } from "../../Context/EditBrandContext";
-import { useDeleteBrand } from "../../Context/DeleteBrandContext";
+import { useCategories } from "../../Context/GetCategories";
+import { useUpdateCategory } from "../../Context/EditCategoryContext";
+import { useDeleteCategory } from "../../Context/DeleteCategoryContext";
 import ConfirmationDialog from '../../Components/Confirmation/ConfirmationDialog';
-import EditBrandModal from '../../Components/Modals/EditBrand';
+import EditCategoryModal from '../../Components/Modals/EditCategory';
 import { toast } from 'react-toastify';
 
-
-
-
 const CategoryList = () => {
-  const { brands, loading, error, removeBrandFromState } = useBrands();
-  const { updateBrand } = useUpdateBrand();
-  const { deleteBrand, isLoading: isDeleting } = useDeleteBrand();
+  const { categories, loading, error, removeCategoryFromState } = useCategories();
+  const { updateCategory } = useUpdateCategory();
+  const { deleteCategory, isLoading: isDeleting } = useDeleteCategory();
 
   const [actionMenu, setActionMenu] = useState(null);
-  const [selectedBrand, setSelectedBrand] = useState(null);
-  const [editBrand, setEditBrand] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [editCategory, setEditCategory] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  // Toggle the action menu for a specific brand
   const toggleMenu = (_id) => {
     setActionMenu(actionMenu === _id ? null : _id);
   };
 
-  // Handle delete click
-  const handleDeleteClick = (brand) => {
-    setSelectedBrand(brand);
+  const handleDeleteClick = (category) => {
+    setSelectedCategory(category);
     setIsDialogOpen(true);
   };
 
-  // Confirm delete action
   const handleConfirmDelete = async () => {
-    if (selectedBrand) {
-      setIsDialogOpen(false); // Close modal immediately
-  
+    if (selectedCategory) {
+      setIsDialogOpen(false);
       try {
-        const result = await deleteBrand(selectedBrand._id);
-  
+        const result = await deleteCategory(selectedCategory._id);
         if (result.success) {
-          toast.success("Brand deleted successfully");
-  
-          // Remove brand from state after successful deletion
-          removeBrandFromState(selectedBrand._id);
-          
-          setSelectedBrand(null);
+          toast.success("Category deleted successfully");
+          removeCategoryFromState(selectedCategory._id);
+          setSelectedCategory(null);
           setActionMenu(null);
         } else {
-          toast.error("Failed to delete brand");
+          toast.error("Failed to delete category");
         }
       } catch (error) {
-        toast.error("Error deleting brand");
+        toast.error("Error deleting category");
       }
     }
   };
-  
 
-  // Handle edit action
-  const handleEditClick = (brand) => {
-    setEditBrand(brand);
+  const handleEditClick = (category) => {
+    setEditCategory(category);
   };
 
-  // Update the brand details after edit
-  const handleUpdate = async (updatedBrand) => {
-    const result = await updateBrand(editBrand._id, updatedBrand);
+  const handleUpdate = async (updatedCategory) => {
+    const result = await updateCategory(editCategory._id, updatedCategory);
     if (result.success) {
-      setEditBrand(null); // Close modal after successful update
+      setEditCategory(null);
     }
   };
 
@@ -88,14 +74,14 @@ const CategoryList = () => {
               </tr>
             </thead>
             <tbody>
-              {brands && brands.length > 0 ? (
-                brands.map((brand, index) => (
-                  <tr key={brand._id} className="hover:bg-gray-50">
+              {categories && categories.length > 0 ? (
+                categories.map((category, index) => (
+                  <tr key={category._id} className="hover:bg-gray-50">
                     <td className="py-3 px-4">{index + 1}</td>
                     <td className="py-3 px-4">
                       <img
-                        src={brand.logo || 'path/to/placeholder.png'} // Cloudinary URL or placeholder
-                        alt={`${brand.name} logo`}
+                        src={category.image || 'path/to/placeholder.png'}
+                        alt={`${category.name} image`}
                         className="w-16 h-16 object-cover rounded"
                         onError={(event) => {
                           event.target.src = 'path/to/placeholder.png';
@@ -104,13 +90,13 @@ const CategoryList = () => {
                     </td>
                     <td className="py-3 px-4">
                       <div className="space-y-1">
-                        <h5 className="font-semibold text-gray-800">{brand.name}</h5>
-                        <p className="text-sm text-gray-500">ID: {brand._id.substring(0, 8)}</p>
+                        <h5 className="font-semibold text-gray-800">{category.name}</h5>
+                        <p className="text-sm text-gray-500">ID: {category._id.substring(0, 8)}</p>
                       </div>
                     </td>
                     <td className="py-3 px-4 relative">
                       <button
-                        onClick={() => toggleMenu(brand._id)}
+                        onClick={() => toggleMenu(category._id)}
                         aria-label="Options"
                         className="focus:outline-none"
                       >
@@ -120,17 +106,17 @@ const CategoryList = () => {
                           className="w-6 h-6 cursor-pointer"
                         />
                       </button>
-                      {actionMenu === brand._id && (
+                      {actionMenu === category._id && (
                         <div className="absolute right-0 mt-2 bg-white border rounded shadow-lg w-40 z-10">
                           <button
                             className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
-                            onClick={() => handleEditClick(brand)}
+                            onClick={() => handleEditClick(category)}
                           >
                             Edit
                           </button>
                           <button
                             className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
-                            onClick={() => handleDeleteClick(brand)}
+                            onClick={() => handleDeleteClick(category)}
                             disabled={isDeleting}
                           >
                             Delete
@@ -143,7 +129,7 @@ const CategoryList = () => {
               ) : (
                 <tr>
                   <td colSpan="4" className="text-center py-5 text-gray-500">
-                    No brands available.
+                    No categories available.
                   </td>
                 </tr>
               )}
@@ -152,12 +138,12 @@ const CategoryList = () => {
         </div>
       </div>
 
-      {editBrand && (
-        <EditBrandModal
-          brands={editBrand}
-          onClose={() => setEditBrand(null)}
-          onUpdate={(updatedBrand) => {
-            handleUpdate(updatedBrand);
+      {editCategory && (
+        <EditCategoryModal
+          category={editCategory}
+          onClose={() => setEditCategory(null)}
+          onUpdate={(updatedCategory) => {
+            handleUpdate(updatedCategory);
           }}
         />
       )}
@@ -166,7 +152,7 @@ const CategoryList = () => {
         isOpen={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}
         onConfirm={handleConfirmDelete}
-        message={`Are you sure you want to delete "${selectedBrand?.name}"?`}
+        message={`Are you sure you want to delete "${selectedCategory?.name}"?`}
         warning="This action cannot be undone."
       />
     </div>

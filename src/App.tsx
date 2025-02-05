@@ -8,12 +8,12 @@ import SingleProduct from './Pages/Products/SingleProduct';
 import { ToastContainer, toast } from 'react-toastify';
 import Signin from './Pages/Auth/Signin';
 import Signup from './Pages/Auth/Signup';
-import { AuthProvider} from './Context/AuthContext'
+import { AuthProvider} from './Context/AuthContext';
 import { ProductProvider } from './Context/ProductContext';
 import ProtectedRoute from './Components/ProtectedRoute';
 import { EditProductProvider } from './Context/EditProductContext';
 import { DeleteProductProvider } from './Context/DeleteProductContext';
-import {CreateProductProvider} from "./Context/CreateProductContext"
+import {CreateProductProvider} from "./Context/CreateProductContext";
 import BrandList from './Pages/Brands/BrandList';
 import { BrandsProvider } from './Context/GetBrandsContext';
 import { DeleteBrandProvider } from './Context/DeleteBrandContext';
@@ -23,6 +23,7 @@ import AddProduct from './Pages/Products/AddProduct';
 import { BrandProvider } from './Context/CreateBrand';
 import AddCategory from './Pages/Categories/AddCategories';
 import { CategoryProvider } from './Context/createCategories';
+import { CategoriesProvider } from './Context/GetCategories';
 
 
 
@@ -30,6 +31,7 @@ function App() {
 
   return (
     <>
+    <CategoriesProvider>
     <CategoryProvider>
     <BrandProvider>
     <UpdateBrandProvider>
@@ -71,6 +73,7 @@ function App() {
     </UpdateBrandProvider>
     </BrandProvider>
     </CategoryProvider>
+    </CategoriesProvider>
     </>
   )
 }
