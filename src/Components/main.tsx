@@ -30,6 +30,9 @@ import BrandList from '../Pages/Brands/BrandList';
 import AddBrand from '../Pages/Brands/AddBrand';
 import AddProduct from '../Pages/Products/AddProduct';
 import AddCategory from '../Pages/Categories/AddCategories';
+import CategoryList from '../Pages/Categories/CategoryLists';
+import ColorList from '../Pages/Colors/ColorList';
+import AddColor from '../Pages/Colors/CreateColors';
 
 const drawerWidth = 240;
 
@@ -262,6 +265,9 @@ export default function Main() {
           <Route  path='/add-brand' element={<AddBrand/>}/>
           <Route  path='/brand-list' element={<BrandList/>}/>
           <Route  path='/add-category' element={<AddCategory/>}/>
+          <Route  path='/category-list' element={<CategoryList/>}/>
+          <Route  path='/color-list' element={<ColorList/>}/>
+          <Route  path='/color' element={<AddColor/>}/>
         </Routes>
       </Box>
     </Box>

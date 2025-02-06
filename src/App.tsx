@@ -24,6 +24,15 @@ import { BrandProvider } from './Context/CreateBrand';
 import AddCategory from './Pages/Categories/AddCategories';
 import { CategoryProvider } from './Context/createCategories';
 import { CategoriesProvider } from './Context/GetCategories';
+import CategoryList from './Pages/Categories/CategoryLists';
+import { UpdateCategoryProvider } from './Context/EditCategories';
+import { DeleteCategoryProvider } from './Context/DeleteCategories';
+import ColorList from './Pages/Colors/ColorList';
+import CreateColorProvider from './Context/CreateColors';
+import DeleteColorProvider from './Context/DeleColorContext';
+import AddColor from './Pages/Colors/CreateColors';
+import { ColorsProvider } from './Context/GetColorsContext';
+import { EditColorProvider } from './Context/EditColorsContext';
 
 
 
@@ -31,6 +40,12 @@ function App() {
 
   return (
     <>
+    <EditColorProvider>
+    <ColorsProvider>
+    <CreateColorProvider>
+    <DeleteColorProvider>
+    <DeleteCategoryProvider>
+    <UpdateCategoryProvider>
     <CategoriesProvider>
     <CategoryProvider>
     <BrandProvider>
@@ -59,6 +74,9 @@ function App() {
                 <Route path="brand-list" element={<BrandList />} />
                 <Route path="add-category" element={<AddCategory />} />
                 <Route path="singlePro" element={<SingleProduct />} />
+                <Route path="category-list" element={<CategoryList />} />
+                <Route path='color-list' element={<ColorList/>}/>
+                <Route path='color' element={<AddColor/>}/>
               </Route>
           </Route>
 
@@ -74,6 +92,12 @@ function App() {
     </BrandProvider>
     </CategoryProvider>
     </CategoriesProvider>
+    </UpdateCategoryProvider>
+    </DeleteCategoryProvider>
+    </DeleteColorProvider>
+    </CreateColorProvider>
+    </ColorsProvider>
+    </EditColorProvider>
     </>
   )
 }
