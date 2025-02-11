@@ -23,7 +23,7 @@ export const CreateProductProvider: React.FC<{ children: ReactNode }> = ({ child
 
     const createProduct = async (productData: Product): Promise<CreateProductResponse> => {
         try {
-            const response = await API.post<CreateProductResponse>("/products", productData);
+            const response = await API.post("/products", productData);
             setProducts((prev) => [...prev, response.data]);
             return response.data;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

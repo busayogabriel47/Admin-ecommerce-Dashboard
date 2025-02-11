@@ -68,7 +68,10 @@ const ViewProductModal: React.FC<ViewProductModalProps> = ({ setSelectedProduct,
                                 {selectedProduct?.title || "Cotton Rich Jersey Slim Blazer"}
                             </h2>
                             <p className="mb-4">Product ID: {selectedProduct?._id.slice(0, 8)}</p>
-                            <h5 className="font-bold">{selectedProduct?.category || "Category"}</h5>
+                            {selectedProduct?.category?.map((cat)=> 
+                                <h5 className="font-bold">{cat.name}</h5>
+                            )}
+                            
                             <p>{selectedProduct?.description || "Product description goes here."}</p>
                             <div className="flex flex-wrap md:flex-nowrap gap-4 mt-12">
                                 <div className="flex items-center gap-3 basis-1/2">

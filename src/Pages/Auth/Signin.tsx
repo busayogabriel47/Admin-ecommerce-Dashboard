@@ -41,14 +41,14 @@ const Signin = () => {
         <div className="flex justify-center items-center w-full bg-black min-h-screen">
             <div className="flex flex-col md:flex-row w-[90%] max-w-5xl h-full">
                 {/* Left Section - Logo */}
-                <div className="w-full md:w-[50%] flex justify-center items-center min-h-screen">
-                    <div className="border-r-2 border-[#EFB65B] flex justify-center items-center w-full h-auto py-10">
+                <div className="w-full h-[500px] md:w-[50%] flex justify-center items-center md:min-h-screen">
+                    <div className="md:border-r-2 md:border-[#EFB65B] flex justify-center items-center w-full h-auto py-10">
                         <img src={glogo} alt="Logo" className="w-[60%] md:w-[50%]" />
                     </div>
                 </div>
 
                 {/* Right Section - Form */}
-                <div className="w-full md:w-[50%] flex justify-center items-center min-h-screen">
+                <div className="w-full md:w-[50%] h-[200px] flex justify-center items-center md:min-h-screen">
                     <div className="p-8 rounded shadow-md max-w-md w-full mx-auto text-center">
                         <h2 className="text-2xl font-semibold text-white">Welcome</h2>
                         <p className="mb-4 text-white">PLEASE LOGIN TO ADMIN DASHBOARD</p>

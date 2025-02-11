@@ -32,7 +32,7 @@ const ProductContent:React.FC = () => {
     {products && products.length > 0 ? (
       products.map((product) => (
         <div
-          key={product.id}
+          key={product._id}
           className="relative shadow-md rounded-lg overflow-hidden border border-gray-200 bg-white"
         >
           <div className="relative">
@@ -43,12 +43,12 @@ const ProductContent:React.FC = () => {
             />
             <button
               className={`absolute top-2 left-2 px-3 py-1 text-xs rounded-md ${
-                product.inStock > 0
+                product.inStock === true
                   ? 'bg-green-500 text-white'
                   : 'bg-red-500 text-white'
               }`}
             >
-              {product.inStock > 0 ? 'In Stock' : 'Out of Stock'}
+              {product.inStock === true ? 'In Stock' : 'Out of Stock'}
             </button>
           </div>
           <div className="p-4">

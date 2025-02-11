@@ -138,7 +138,6 @@ const AddProduct: React.FC = () => {
     <div className="bg-[#EEEEEE] min-h-screen flex items-center justify-center p-4 sm:p-8">
       <div className="w-full max-w-4xl bg-white p-6 rounded-lg shadow-lg">
         <h2 className="text-xl font-bold mb-6">Add Product</h2>
-        <form onSubmit={handleSubmit} className="space-y-6">
           {/* Form fields remain the same */}
           <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 gap-6">
@@ -372,7 +371,7 @@ const AddProduct: React.FC = () => {
                         </button>
                     </div>
                 </form>
-        </form>
+        
       </div>
     </div>
   );

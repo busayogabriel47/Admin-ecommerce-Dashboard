@@ -1,7 +1,7 @@
 import axios, { AxiosError, InternalAxiosRequestConfig, AxiosResponse } from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://genius-store-backend.onrender.com/api",
   withCredentials: true, // Allows cookies (for refresh token)
 });
 

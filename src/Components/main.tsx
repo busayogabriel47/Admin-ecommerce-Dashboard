@@ -255,7 +255,7 @@ export default function Main() {
 
         </List>
       </Drawer>
-      <Box className="bg-[#EEEEEE] min-h-[100vh]" component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box className="bg-[#OOO] min-h-[100vh]" component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         <Routes>
           <Route path="/" element={<Dashboard />} />

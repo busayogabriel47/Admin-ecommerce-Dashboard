@@ -22,20 +22,18 @@ interface Color {
  export interface Product {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     _id: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     img: any;
     title: string,
-    inStock: number;
+    inStock: boolean;
     date: string;
-    id: string;
-    name: string;
     description: string,
     price: number;
-    category: string;
     sold: number,
     slug: string,
     quantity: number,
     earning: number,
-    categories: Category[];
+    category: Category[];
     tags: string[];
     size: string[];
     color: Color[];

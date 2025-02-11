@@ -3,6 +3,11 @@
 @tailwind components;
 @tailwind utilities;
 
+.css-1l8j5k8,
+.css-1harjs-MuiDrawer-docked{
+  background-color: #000!important;
+}
+
 .css-19z1ozs-MuiPaper-root-MuiAppBar-root{
   background-color: #FEFEFE !important;
   width: 100% !important;
@@ -16,7 +21,6 @@
 .css-12i7wg6-MuiPaper-root-MuiDrawer-paper{
   background: #0000 !important;
 }
-
 
 
 @media (min-width: 600px){

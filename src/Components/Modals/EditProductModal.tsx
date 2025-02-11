@@ -21,6 +21,7 @@ interface Color {
 }
 
 interface Product {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     img: any;
     _id: string;
     title: string;
@@ -28,13 +29,16 @@ interface Product {
     quantity: number;
     currency: string;
     slug: string;
+    sold: number;
     brand: Brand;
     inStock: boolean;
+    earning: number;
     description: string;
-    categories: Category[];
+    category: Category[];
     tags: string[];
     size: string[];
     color: Color[];
+    date: string
 }
 
 interface EditProductModalProps {
@@ -73,7 +77,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({ product, onClose, o
         brand: product?.brand?._id || "",
         inStock: product?.inStock || false,
         description: product?.description || "",
-        categories: product?.categories?.map(cat => cat.slug) || [],
+        categories: product?.category?.map(cat => cat.slug) || [],
         tags: product?.tags || [],
         size: product?.size || [],
         color: product?.color?.map(col => col._id) || [],
@@ -136,9 +140,9 @@ const EditProductModal: React.FC<EditProductModalProps> = ({ product, onClose, o
                     if (product.brand) {
                         setSelectedBrand({ value: product.brand._id, label: product.brand.name });
                     }
-                    if (product.categories) {
+                    if (product.category) {
                         setSelectedCategories(
-                            product.categories.map((cat) => ({ value: cat.slug, label: cat.name }))
+                            product.category.map((cat) => ({ value: cat.slug, label: cat.name }))
                         );
                     }
                     if (product?.color) {

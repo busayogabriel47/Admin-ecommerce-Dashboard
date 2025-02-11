@@ -86,7 +86,7 @@ const ProductList: React.FC = () => {
                     </td>
                     <td className="py-3 px-2 sm:px-4">₦{product.price}</td>
                     <td className="py-3 px-2 sm:px-4">
-                      <div className={`px-2 py-1 rounded-xl text-center ${product.inStock > 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>{product.inStock > 0 ? 'In Stock' : 'Out of Stock'}</div>
+                      <div className={`px-2 py-1 rounded-xl text-center ${product.inStock === true ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>{product.inStock === true ? 'In Stock' : 'Out of Stock'}</div>
                     </td>
                     <td className="py-3 px-2 sm:px-4">{product.sold} pcs</td>
                     <td className="py-3 px-2 sm:px-4">₦{product.earning}</td>
@@ -112,7 +112,15 @@ const ProductList: React.FC = () => {
         </div>
       </div>
       {selectedProduct && <ViewProductModal setSelectedProduct={setSelectedProduct} selectedProduct={selectedProduct} />}
-      {editProduct && <EditProductModal product={editProduct} onClose={() => setEditProduct(null)} onUpdate={handleUpdate} />}
+      {editProduct && (
+  <EditProductModal
+    product={editProduct}
+    onClose={() => setEditProduct(null)}
+    onUpdate={(updatedProduct) => handleUpdate(editProduct._id, updatedProduct)}
+  />
+)}
+
+
       <ConfirmationDialog isOpen={isDialogOpen} onClose={() => setIsDialogOpen(false)} onConfirm={handleConfirmDelete} message={`Delete "${selectedProduct?.title}"?`} warning="This action cannot be undone." />
     </div>
   );
